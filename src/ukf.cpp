@@ -257,7 +257,11 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
     Zsig(0,i) = Xsig_pred_(0,i);
     Zsig(1,i) = Xsig_pred_(1,i);
   }
-  
+  weights_(0) = lambda_/(lambda_ + n_aug_);
+  for(int i = 1; i < 2*n_aug_+1; i++)
+  {
+    weights_(i) = 0.5/(lambda_ + n_aug_);
+  }
   // Mean 
   VectorXd z_pred = VectorXd(n_z_);
   z_pred.fill(0.0);
@@ -343,7 +347,11 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
     Zsig(1,i) = atan2(p_y,p_x);                                 //phi
     Zsig(2,i) = (p_x*v1 + p_y*v2 ) / sqrt(p_x*p_x + p_y*p_y);   //r_dot
   }
-  
+  weights_(0) = lambda_/(lambda_ + n_aug_);
+  for(int i = 1; i < 2*n_aug_+1; i++)
+  {
+    weights_(i) = 0.5/(lambda_ + n_aug_);
+  }
   //mean predicted measurement
   VectorXd z_pred = VectorXd(n_z_);
   z_pred.fill(0.0);
