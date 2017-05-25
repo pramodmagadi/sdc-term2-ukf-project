@@ -29,10 +29,10 @@ UKF::UKF() {
   n_aug_ = 7;
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ =  1.5;
+  std_a_ =  1.8;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 0.2;
+  std_yawdd_ = 0.25;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
@@ -88,7 +88,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
          0, 0, 0, 1, 0,
          0, 0, 0, 0, 1;
          
-    x_ << 1, 1, 1, 1, 0.05;
+    x_ << 1, 1, 1, 1, 0.2;
     time_us_ = meas_package.timestamp_;
     if(meas_package.sensor_type_ == MeasurementPackage::LASER && use_laser_)
     {
